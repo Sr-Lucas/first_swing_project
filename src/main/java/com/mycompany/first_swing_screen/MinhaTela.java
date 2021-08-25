@@ -6,12 +6,15 @@
 package com.mycompany.first_swing_screen;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author 71124
  */
 public class MinhaTela extends javax.swing.JFrame {
+    private boolean isContractAccepted = false;
+    
     public MinhaTela() {
         initComponents();
     }
@@ -93,10 +96,10 @@ public class MinhaTela extends javax.swing.JFrame {
         nameLbl4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         declaracaoTxt = new javax.swing.JTextArea();
-        jPanel5 = new javax.swing.JPanel();
+        confirmPn = new javax.swing.JPanel();
         nameLbl5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        yesBtn = new javax.swing.JButton();
+        notBtn = new javax.swing.JButton();
         interesseTxt = new javax.swing.JLabel();
         telefoneField = new javax.swing.JFormattedTextField();
         jPanel6 = new javax.swing.JPanel();
@@ -106,6 +109,11 @@ public class MinhaTela extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
 
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -247,37 +255,47 @@ public class MinhaTela extends javax.swing.JFrame {
         declaracaoTxt.setRows(5);
         jScrollPane1.setViewportView(declaracaoTxt);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Confirmação"));
+        confirmPn.setBorder(javax.swing.BorderFactory.createTitledBorder("Confirmação"));
 
         nameLbl5.setText("Você está de acordo com a delaração contratual?");
 
-        jButton1.setText("Sim");
+        yesBtn.setText("Sim");
+        yesBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                yesBtnMousePressed(evt);
+            }
+        });
 
-        jButton2.setText("Não");
+        notBtn.setText("Não");
+        notBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                notBtnMouseEntered(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout confirmPnLayout = new javax.swing.GroupLayout(confirmPn);
+        confirmPn.setLayout(confirmPnLayout);
+        confirmPnLayout.setHorizontalGroup(
+            confirmPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(confirmPnLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(confirmPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nameLbl5)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                    .addGroup(confirmPnLayout.createSequentialGroup()
+                        .addComponent(yesBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(notBtn)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        confirmPnLayout.setVerticalGroup(
+            confirmPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(confirmPnLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nameLbl5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addGroup(confirmPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(yesBtn)
+                    .addComponent(notBtn))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -304,7 +322,7 @@ public class MinhaTela extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(confirmPn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
@@ -368,7 +386,7 @@ public class MinhaTela extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1)))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(confirmPn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(129, Short.MAX_VALUE))
         );
 
@@ -473,20 +491,39 @@ public class MinhaTela extends javax.swing.JFrame {
         updateDeclaracao();
     }//GEN-LAST:event_emailChkStateChanged
 
+    private void notBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notBtnMouseEntered
+        float x = notBtn.getLocation().x + notBtn.getWidth();
+        float y = notBtn.getLocation().y;
+        notBtn.setLocation(Math.round(x), Math.round(y));
+        if(notBtn.getLocation().x > (this.getWidth() - 100)) {
+            notBtn.setLocation(0, Math.round(y));
+        }
+    }//GEN-LAST:event_notBtnMouseEntered
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        if(jTabbedPane1.getSelectedIndex() == 1 && !isContractAccepted) {
+            jTabbedPane1.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void yesBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yesBtnMousePressed
+        isContractAccepted = true;
+        JOptionPane.showMessageDialog(this, "Contrato aceito!");
+        confirmPn.setVisible(false);
+    }//GEN-LAST:event_yesBtnMousePressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel confirmPn;
     private javax.swing.JTextArea declaracaoTxt;
     private javax.swing.JCheckBox emailChk;
     private javax.swing.JRadioButton femininoRad;
     private javax.swing.JSlider interesseSlide;
     private javax.swing.JLabel interesseTxt;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -499,9 +536,11 @@ public class MinhaTela extends javax.swing.JFrame {
     private javax.swing.JLabel nameLbl3;
     private javax.swing.JLabel nameLbl4;
     private javax.swing.JLabel nameLbl5;
+    private javax.swing.JButton notBtn;
     private javax.swing.JComboBox<String> profiessaoComb;
     private javax.swing.JCheckBox smsChk;
     private javax.swing.JFormattedTextField telefoneField;
     private javax.swing.JCheckBox whatsChk;
+    private javax.swing.JButton yesBtn;
     // End of variables declaration//GEN-END:variables
 }
